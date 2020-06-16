@@ -766,7 +766,8 @@ namespace TextAdventuresCS
             {
                 if (thing.Location == Inventory)
                 {
-                    Console.WriteLine(thing.Name);
+                  Console.Write(thing.Name.PadRight(10));
+                    Console.WriteLine(" (" + thing.Description + ")");
                 }
             }
             Console.WriteLine();
@@ -877,11 +878,11 @@ namespace TextAdventuresCS
                         Console.WriteLine("Are you sure? (y/n)");
                         string responce = Console.ReadLine();
                         string newresponce = responce.ToLower();
-                        if(newresponce == "y" || newresponce == "yes")
+                        if (newresponce == "y" || newresponce == "yes")
                         {
-                          Say("you decide to give up, try again another time");
-                          stopGame = true;
-                        }                       
+                            Say("you decide to give up, try again another time");
+                            stopGame = true;
+                        }
                         break;
                     default:
                         Console.WriteLine("Sorry, you don't know how to " + Command + ".");
