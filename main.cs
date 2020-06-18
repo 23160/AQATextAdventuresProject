@@ -651,6 +651,7 @@ namespace TextAdventuresCS
             List<int> ListofIndicesOfItemsInInventory = new List<int>();
             List<string> ListOfNamesOfItemsInInventory = new List<string>();
             int Count = 0;
+            bool HaveItem = false;
             while (Count < items.Count)
             {
                 if (items[Count].Location == idOfOtherCharacter)
@@ -660,26 +661,36 @@ namespace TextAdventuresCS
                 }
                 Count++;
             }
+            while (Count < ListOfNamesOfItemsInInventory.Count - 1)
+                {
+                    Console.Write(", " + ListOfNamesOfItemsInInventory[Count]);
+                    Count++;
+                }
             Count = 1;
             Console.Write("Which item do you want to take?  They have: ");
             Console.Write(ListOfNamesOfItemsInInventory[0]);
-            while (Count < ListOfNamesOfItemsInInventory.Count - 1)
-            {
-                Console.Write(", " + ListOfNamesOfItemsInInventory[Count]);
-                Count++;
-            }
-            Console.WriteLine(".");
             string ChosenItem = Console.ReadLine();
-            if (ListOfNamesOfItemsInInventory.Contains(ChosenItem))
+            while (HaveItem == false)
             {
-                Console.WriteLine("You have that now.");
-                int pos = ListOfNamesOfItemsInInventory.IndexOf(ChosenItem);
-                ChangeLocationOfItem(items, Convert.ToInt32(ListofIndicesOfItemsInInventory[pos]), Inventory);
+               
+                Console.WriteLine(".");
+                if (ListOfNamesOfItemsInInventory.Contains(ChosenItem))
+                {
+                    HaveItem = true;
+                    Console.WriteLine("You have that now.");
+                    int pos = ListOfNamesOfItemsInInventory.IndexOf(ChosenItem);
+                    ChangeLocationOfItem(items, Convert.ToInt32(ListofIndicesOfItemsInInventory[pos]), Inventory);
+                }
+                else
+                {
+                    Console.WriteLine("They dont have a " + ChosenItem + " - try again");
+                    Count = 1;
+                    Console.Write("Which item do you want to take?  They have: ");
+                    Console.Write(ListOfNamesOfItemsInInventory[0]);
+                    ChosenItem = Console.ReadLine();
+                }
             }
-            else
-            {
-                Console.WriteLine("They don't have that item, so you don't take anything this time.");
-            }
+            
         }
 
         private static void TakeRandomItemFromPlayer(List<Item> items, int otherCharacterID)
