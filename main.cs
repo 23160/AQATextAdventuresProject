@@ -630,19 +630,6 @@ namespace TextAdventuresCS
                 }
                 Count++;
             }
-            if (playerHasDie == false)
-            {
-                Console.WriteLine("player has no die");
-            }
-            else if (playersInSameRoom == false)
-            {
-                Console.WriteLine(otherCharacterName + " is not here");
-            }
-
-            else if (otherCharacterHasDie == false)
-            {
-                Console.WriteLine(otherCharacterName + " has no die");
-            }
             return playerHasDie && playersInSameRoom && otherCharacterHasDie;
         }
 
@@ -651,7 +638,8 @@ namespace TextAdventuresCS
             List<int> ListofIndicesOfItemsInInventory = new List<int>();
             List<string> ListOfNamesOfItemsInInventory = new List<string>();
             int Count = 0;
-            bool HaveItem = false;
+            bool haveItem = false;
+            
             while (Count < items.Count)
             {
                 if (items[Count].Location == idOfOtherCharacter)
@@ -661,36 +649,32 @@ namespace TextAdventuresCS
                 }
                 Count++;
             }
-            while (Count < ListOfNamesOfItemsInInventory.Count - 1)
+
+            while(haveItem == false)
+            {
+                Count = 1;
+                Console.Write("Which item do you want to take?  They have: ");
+                Console.Write(ListOfNamesOfItemsInInventory[0]);
+                while (Count < ListOfNamesOfItemsInInventory.Count - 1)
                 {
                     Console.Write(", " + ListOfNamesOfItemsInInventory[Count]);
                     Count++;
                 }
-            Count = 1;
-            Console.Write("Which item do you want to take?  They have: ");
-            Console.Write(ListOfNamesOfItemsInInventory[0]);
-            string ChosenItem = Console.ReadLine();
-            while (HaveItem == false)
-            {
-               
                 Console.WriteLine(".");
+                string ChosenItem = Console.ReadLine();
                 if (ListOfNamesOfItemsInInventory.Contains(ChosenItem))
                 {
-                    HaveItem = true;
+                    haveItem = true;
                     Console.WriteLine("You have that now.");
                     int pos = ListOfNamesOfItemsInInventory.IndexOf(ChosenItem);
                     ChangeLocationOfItem(items, Convert.ToInt32(ListofIndicesOfItemsInInventory[pos]), Inventory);
                 }
                 else
                 {
-                    Console.WriteLine("They dont have a " + ChosenItem + " - try again");
-                    Count = 1;
-                    Console.Write("Which item do you want to take?  They have: ");
-                    Console.Write(ListOfNamesOfItemsInInventory[0]);
-                    ChosenItem = Console.ReadLine();
-                }
+                    Console.WriteLine("They don't have a " + ChosenItem + " - try again");
+                }              
             }
-            
+           
         }
 
         private static void TakeRandomItemFromPlayer(List<Item> items, int otherCharacterID)
@@ -790,7 +774,7 @@ namespace TextAdventuresCS
             {
                 if (thing.Location == Inventory)
                 {
-                    Console.WriteLine(thing.Name + "(" + thing.Description + ")");
+                    Console.WriteLine(thing.Name);
                 }
             }
             Console.WriteLine();
@@ -901,11 +885,11 @@ namespace TextAdventuresCS
                         Console.WriteLine("Are you sure? (y/n)");
                         string responce = Console.ReadLine();
                         string newresponce = responce.ToLower();
-                        if (newresponce == "y" || newresponce == "yes")
+                        if(newresponce == "y" || newresponce == "yes")
                         {
-                            Say("you decide to give up, try again another time");
-                            stopGame = true;
-                        }
+                          Say("you decide to give up, try again another time");
+                          stopGame = true;
+                        }                       
                         break;
                     default:
                         Console.WriteLine("Sorry, you don't know how to " + Command + ".");
