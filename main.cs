@@ -26,7 +26,7 @@ namespace TextAdventuresCS
         class Character
         {
             public string Name, Description;
-            public int ID, CurrentLocation;
+            public int ID, CurrentLocation, Health;
         }
 
         class Item
